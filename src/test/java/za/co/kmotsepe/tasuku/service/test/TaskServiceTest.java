@@ -97,20 +97,16 @@ public class TaskServiceTest extends TestCase {
     @Test
     public void when_update_task_then_task_name_should_be_different() {
         task = TaskEntity.builder().id(1).name("task name").description("task description").build();
-        task = taskService.saveTask(task);
 
         TaskEntity updatedTask = TaskEntity.builder().id(1).name("updated name").description("task description")
                 .build();
 
-        TaskEntity task = taskService.getTaskById(updatedTask.getId());
+        when(taskRepository.findOne(updatedTask.getId())).thenReturn(task);
+
+        TaskEntity returnedTask = taskService.updateTask(updatedTask);
         verify(taskRepository, times(1)).findOne(updatedTask.getId());
-        //BeanUtils.copyProperties(updatedTask, task);
 
-        //TaskEntity returnedTask = taskService.updateTask(updatedTask);
-
-       // assertNotNull(updatedTask);
-        assertNotEquals(updatedTask, task);
-        //assertThat(returnedTask, is(equalTo(updatedTask)));
+        assertThat(task, is(equalTo(returnedTask)));
     }
 
     @Test
