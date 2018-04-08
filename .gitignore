@@ -1,1 +1,8 @@
-/target/
+target
+nb-configuration.xml
+.idea
+.classpath
+.settings
+settings.json
+.project
+tasuku-core.iml
